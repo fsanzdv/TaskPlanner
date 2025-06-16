@@ -1,5 +1,5 @@
 const express = require('express');
-const { body } = require('express-validator');
+const { body, validationResult } = require('express-validator'); // ← LÍNEA CORREGIDA
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -145,8 +145,8 @@ router.post('/login', loginValidation, handleValidation, authController.login);
 router.post('/forgot-password', forgotPasswordValidation, handleValidation, authController.forgotPassword);
 router.post('/reset-password', resetPasswordValidation, handleValidation, authController.resetPassword);
 
-// Rutas protegidas (requieren autenticación)
-router.use(auth); // Aplicar middleware de autenticación a todas las rutas siguientes
+
+router.use(auth);
 
 router.get('/profile', authController.getProfile);
 router.put('/profile', updateProfileValidation, handleValidation, authController.updateProfile);

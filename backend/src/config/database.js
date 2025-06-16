@@ -5,14 +5,14 @@ const connectDB = async () => {
   try {
     const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/taskplanner';
     
+    // Opciones simplificadas y actualizadas para Mongoose moderno
     const options = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      maxPoolSize: 10,
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-      bufferCommands: false,
-      bufferMaxEntries: 0
+      maxPoolSize: 10, // Mantiene hasta 10 conexiones
+      serverSelectionTimeoutMS: 5000, // Tiempo de espera para seleccionar servidor
+      socketTimeoutMS: 45000, // Tiempo de espera para operaciones de socket
+      // Removidas las opciones obsoletas: bufferCommands y bufferMaxEntries
     };
 
     // Conectar a MongoDB

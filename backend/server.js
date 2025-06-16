@@ -19,7 +19,7 @@ const adminRoutes = require('./src/routes/adminRoutes');
 
 // Importar middleware
 const errorHandler = require('./src/middleware/errorHandler');
-const authMiddleware = require('./src/middleware/auth');
+const { auth } = require('./src/middleware/auth'); // ⬅️ CAMBIO AQUÍ
 
 // Importar servicios WebSocket
 const socketService = require('./src/services/socketService');
@@ -64,8 +64,8 @@ socketService.initialize(io);
 
 // Rutas principales
 app.use('/api/auth', authRoutes);
-app.use('/api/tasks', authMiddleware, taskRoutes);
-app.use('/api/admin', authMiddleware, adminRoutes);
+app.use('/api/tasks', auth, taskRoutes); // ⬅️ CAMBIO AQUÍ - usar 'auth' en lugar de 'authMiddleware'
+app.use('/api/admin', auth, adminRoutes); // ⬅️ CAMBIO AQUÍ - usar 'auth' en lugar de 'authMiddleware'
 
 // Ruta de prueba
 app.get('/api/test', (req, res) => {
@@ -86,7 +86,7 @@ app.get('/', (req, res) => {
 });
 
 // Middleware de manejo de errores
-app.use(errorHandler);
+app.use(errorHandler.errorHandler); // ⬅️ CAMBIO AQUÍ - usar errorHandler.errorHandler
 
 // Manejar rutas no encontradas
 app.use('*', (req, res) => {
